@@ -1,4 +1,6 @@
 using AluraBackEnd1.Data;
+using AluraBackEnd1.Services;
+using AluraBackEnd1.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AluraBackEnd1
@@ -17,6 +19,10 @@ namespace AluraBackEnd1
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            //Injeção dos services
+            builder.Services.AddScoped<IReceitaService, ReceitaService>();
 
             var app = builder.Build();
 
