@@ -25,7 +25,7 @@ namespace AluraBackEnd1.Controllers
                     throw new Exception("Item já adicionado no mês");
 
                 await _receitaService.Insert(receita);
-                return Ok();
+                return Ok(receita);
             }
 
             catch(Exception e)
@@ -59,6 +59,24 @@ namespace AluraBackEnd1.Controllers
                     throw new Exception("Item não encontrado");
 
                 return Ok(item);
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("/{id}")]
+        public async Task<IActionResult> PutReceita(int id, [FromBody] Receita receita)
+        {
+            try
+            {
+                if (_receitaService.HasReceitaNoMesComAMesmaDescricao(receita))
+                    throw new Exception("Item já adicionado no mês");
+
+                await _receitaService.Update(receita, id);
+                return Ok(receita);
             }
 
             catch (Exception e)
