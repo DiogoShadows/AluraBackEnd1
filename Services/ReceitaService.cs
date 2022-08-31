@@ -37,5 +37,11 @@ namespace AluraBackEnd1.Services
             _financeiroContext.Receitas.Update(item);
             await _financeiroContext.SaveChangesAsync();
         }
+
+        public async Task Delete(Receita receita)
+        {
+            _financeiroContext.Remove(receita);
+            await _financeiroContext.SaveChangesAsync();
+        }
     }
 }

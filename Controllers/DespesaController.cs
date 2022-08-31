@@ -1,5 +1,4 @@
-﻿using AluraBackEnd1.Data;
-using AluraBackEnd1.Models;
+﻿using AluraBackEnd1.Models;
 using AluraBackEnd1.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,39 +6,39 @@ namespace AluraBackEnd1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReceitaController : ControllerBase
+    public class DespesaController : ControllerBase
     {
-        private IReceitaService _receitaService;
+        private IDespesaService _despesaService;
 
-        public ReceitaController(IReceitaService receitaService)
+        public DespesaController(IDespesaService despesaService)
         {
-            _receitaService = receitaService;
+            _despesaService = despesaService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostReceita([FromBody] Receita receita)
+        public async Task<IActionResult> PostDespesa([FromBody] Despesa despesa)
         {
             try
             {
-                if (_receitaService.HasReceitaNoMesComAMesmaDescricao(receita))
+                if (_despesaService.HasDespesaNoMesComAMesmaDescricao(despesa))
                     throw new Exception("Item já adicionado no mês");
 
-                await _receitaService.Insert(receita);
-                return Ok(receita);
+                await _despesaService.Insert(despesa);
+                return Ok(despesa);
             }
 
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetReceitas()
+        public async Task<IActionResult> GetDespesas()
         {
             try
             {
-                return Ok(await _receitaService.AllReceitas());
+                return Ok(await _despesaService.AllDespesas());
             }
 
             catch (Exception e)
@@ -49,11 +48,11 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetReceita(int id)
+        public async Task<IActionResult> GetDespesa(int id)
         {
             try
             {
-                Receita item = await _receitaService.GetById(id);
+                Despesa item = await _despesaService.GetById(id);
 
                 if (item == null)
                     throw new Exception("Item não encontrado");
@@ -68,15 +67,15 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReceita(int id, [FromBody] Receita receita)
+        public async Task<IActionResult> PutDespesa(int id, [FromBody] Despesa despesa)
         {
             try
             {
-                if (_receitaService.HasReceitaNoMesComAMesmaDescricao(receita))
+                if (_despesaService.HasDespesaNoMesComAMesmaDescricao(despesa))
                     throw new Exception("Item já adicionado no mês");
 
-                await _receitaService.Update(receita, id);
-                return Ok(receita);
+                await _despesaService.Update(despesa, id);
+                return Ok(despesa);
             }
 
             catch (Exception e)
@@ -86,16 +85,16 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReceita(int id)
+        public async Task<IActionResult> DeleteDespesa(int id)
         {
             try
             {
-                Receita receita = await _receitaService.GetById(id);
+                Despesa despesa = await _despesaService.GetById(id);
 
-                if (receita == null)
+                if (despesa == null)
                     throw new Exception("Item não encontrado");
 
-                await _receitaService.Delete(receita);
+                await _despesaService.Delete(despesa);
                 return Ok();
             }
 

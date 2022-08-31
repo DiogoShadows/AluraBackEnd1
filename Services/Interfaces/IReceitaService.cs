@@ -9,5 +9,6 @@ namespace AluraBackEnd1.Services.Interfaces
         Task<List<Receita>> AllReceitas();
         Task<Receita> GetById(int id);
         Task Update(Receita receita, int id);
+        Task Delete(Receita receita);
     }
 }

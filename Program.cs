@@ -23,6 +23,7 @@ namespace AluraBackEnd1
 
             //Injeção dos services
             builder.Services.AddScoped<IReceitaService, ReceitaService>();
+            builder.Services.AddScoped<IDespesaService, DespesaService>();
 
             var app = builder.Build();
 
