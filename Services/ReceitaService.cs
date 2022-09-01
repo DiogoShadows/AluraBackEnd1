@@ -26,5 +26,22 @@ namespace AluraBackEnd1.Services
         public async Task<List<Receita>> AllReceitas() => await _financeiroContext.Receitas.ToListAsync();
 
         public async Task<Receita> GetById(int id) => await _financeiroContext.Receitas.FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task Update(Receita receita, int id)
+        {
+            Receita item = await GetById(id);
+            item.Descricao = receita.Descricao;
+            item.Data = receita.Data;
+            item.Valor = receita.Valor;
+
+            _financeiroContext.Receitas.Update(item);
+            await _financeiroContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(Receita receita)
+        {
+            _financeiroContext.Remove(receita);
+            await _financeiroContext.SaveChangesAsync();
+        }
     }
 }
