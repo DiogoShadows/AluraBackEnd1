@@ -1,4 +1,5 @@
 ﻿using AluraBackEnd1.Data;
+using AluraBackEnd1.Data.DTO;
 using AluraBackEnd1.Models;
 using AluraBackEnd1.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostReceita([FromBody] Receita receita)
+        public async Task<IActionResult> PostReceita([FromBody] InserirReceitaDTO receita)
         {
             try
             {
@@ -53,7 +54,7 @@ namespace AluraBackEnd1.Controllers
         {
             try
             {
-                Receita item = await _receitaService.GetById(id);
+                InserirReceitaDTO item = await _receitaService.GetById(id);
 
                 if (item == null)
                     throw new Exception("Item não encontrado");
@@ -68,7 +69,7 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReceita(int id, [FromBody] Receita receita)
+        public async Task<IActionResult> PutReceita(int id, [FromBody] InserirReceitaDTO receita)
         {
             try
             {
@@ -90,12 +91,7 @@ namespace AluraBackEnd1.Controllers
         {
             try
             {
-                Receita receita = await _receitaService.GetById(id);
-
-                if (receita == null)
-                    throw new Exception("Item não encontrado");
-
-                await _receitaService.Delete(receita);
+                await _receitaService.Delete(id);
                 return Ok();
             }
 

@@ -1,6 +1,8 @@
 ﻿using AluraBackEnd1.Data;
+using AluraBackEnd1.Data.DTO;
 using AluraBackEnd1.Models;
 using AluraBackEnd1.Services.Interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AluraBackEnd1.Services
@@ -8,40 +10,53 @@ namespace AluraBackEnd1.Services
     public class ReceitaService : IReceitaService
     {
         private FinanceiroContext _financeiroContext;
+        private IMapper _mapper;
 
-        public ReceitaService(FinanceiroContext financeiroContext)
+        public ReceitaService(FinanceiroContext financeiroContext, IMapper mapper)
         {
             _financeiroContext = financeiroContext;
+            _mapper = mapper;
         }
 
-        public async Task Insert(Receita receita)
+        public async Task Insert(InserirReceitaDTO receita)
         {
-            _financeiroContext.Receitas.Add(receita);
+            _financeiroContext.Receitas.Add(_mapper.Map<Receita>(receita));
             await _financeiroContext.SaveChangesAsync();
         }
 
-        public bool HasReceitaNoMesComAMesmaDescricao(Receita receita) => _financeiroContext.Receitas.Any(x => x.Descricao.ToUpper() == receita.Descricao.ToUpper() && 
+        public bool HasReceitaNoMesComAMesmaDescricao(InserirReceitaDTO receita) => _financeiroContext.Receitas.Any(x => x.Descricao.ToUpper() == receita.Descricao.ToUpper() && 
             x.Data.Month == receita.Data.Month);
 
-        public async Task<List<Receita>> AllReceitas() => await _financeiroContext.Receitas.ToListAsync();
-
-        public async Task<Receita> GetById(int id) => await _financeiroContext.Receitas.FirstOrDefaultAsync(x => x.Id == id);
-
-        public async Task Update(Receita receita, int id)
+        public async Task<List<InserirReceitaDTO>> AllReceitas()
         {
-            Receita item = await GetById(id);
-            item.Descricao = receita.Descricao;
-            item.Data = receita.Data;
-            item.Valor = receita.Valor;
+            List<Receita> receita = await _financeiroContext.Receitas.ToListAsync();
+            return _mapper.Map<List<InserirReceitaDTO>>(receita);
+        }
+
+        public async Task<InserirReceitaDTO> GetById(int id)
+        {
+            Receita receita = await _financeiroContext.Receitas.FirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<InserirReceitaDTO>(receita);
+        }
+
+        public async Task Update(InserirReceitaDTO receita, int id)
+        {
+            Receita item = await _financeiroContext.Receitas.FirstAsync(x => x.Id == id);
+            _mapper.Map(receita, item);
 
             _financeiroContext.Receitas.Update(item);
             await _financeiroContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Receita receita)
+        public async Task Delete(int id)
         {
-            _financeiroContext.Remove(receita);
-            await _financeiroContext.SaveChangesAsync();
+            Receita receita = await _financeiroContext.Receitas.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(receita != null)
+            {
+                _financeiroContext.Remove(receita);
+                await _financeiroContext.SaveChangesAsync();
+            }
         }
     }
 }

@@ -1,14 +1,15 @@
-﻿using AluraBackEnd1.Models;
+﻿using AluraBackEnd1.Data.DTO;
+using AluraBackEnd1.Models;
 
 namespace AluraBackEnd1.Services.Interfaces
 {
     public interface IDespesaService
     {
-        Task Insert(Despesa despesa);
-        bool HasDespesaNoMesComAMesmaDescricao(Despesa despesa);
-        Task<List<Despesa>> AllDespesas();
-        Task<Despesa> GetById(int id);
-        Task Update(Despesa despesa, int id);
-        Task Delete(Despesa despesa);
+        Task Insert(InserirDespesaDTO despesa);
+        bool HasDespesaNoMesComAMesmaDescricao(InserirDespesaDTO despesa);
+        Task<List<InserirDespesaDTO>> AllDespesas();
+        Task<InserirDespesaDTO> GetById(int id);
+        Task Update(InserirDespesaDTO despesa, int id);
+        Task Delete(int id);
     }
 }

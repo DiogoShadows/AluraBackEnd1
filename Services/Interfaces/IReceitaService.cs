@@ -1,14 +1,15 @@
-﻿using AluraBackEnd1.Models;
+﻿using AluraBackEnd1.Data.DTO;
+using AluraBackEnd1.Models;
 
 namespace AluraBackEnd1.Services.Interfaces
 {
     public interface IReceitaService
     {
-        Task Insert(Receita receita);
-        bool HasReceitaNoMesComAMesmaDescricao(Receita receita);
-        Task<List<Receita>> AllReceitas();
-        Task<Receita> GetById(int id);
-        Task Update(Receita receita, int id);
-        Task Delete(Receita receita);
+        Task Insert(InserirReceitaDTO receita);
+        bool HasReceitaNoMesComAMesmaDescricao(InserirReceitaDTO receita);
+        Task<List<InserirReceitaDTO>> AllReceitas();
+        Task<InserirReceitaDTO> GetById(int id);
+        Task Update(InserirReceitaDTO receita, int id);
+        Task Delete(int id);
     }
 }

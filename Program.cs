@@ -13,6 +13,8 @@ namespace AluraBackEnd1
 
             // Add services to the container.
             builder.Services.AddControllers();
+
+            //Conexão com o banco
             string connection = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["FinanceiroConnection"];
             builder.Services.AddDbContext<FinanceiroContext>(opts => opts.UseSqlServer(connection));
 
@@ -20,10 +22,11 @@ namespace AluraBackEnd1
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
             //Injeção dos services
             builder.Services.AddScoped<IReceitaService, ReceitaService>();
             builder.Services.AddScoped<IDespesaService, DespesaService>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
