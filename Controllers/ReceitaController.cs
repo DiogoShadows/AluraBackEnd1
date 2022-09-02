@@ -36,11 +36,11 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetReceitas()
+        public async Task<IActionResult> GetReceitas(string? descricao)
         {
             try
             {
-                return Ok(await _receitaService.AllReceitas());
+                return Ok(await _receitaService.AllReceitas(descricao));
             }
 
             catch (Exception e)

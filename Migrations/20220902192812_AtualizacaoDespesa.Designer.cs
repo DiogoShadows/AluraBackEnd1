@@ -4,6 +4,7 @@ using AluraBackEnd1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AluraBackEnd1.Migrations
 {
     [DbContext(typeof(FinanceiroContext))]
-    partial class FinanceiroContextModelSnapshot : ModelSnapshot
+    [Migration("20220902192812_AtualizacaoDespesa")]
+    partial class AtualizacaoDespesa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -7,7 +7,7 @@ namespace AluraBackEnd1.Services.Interfaces
     {
         Task Insert(InserirDespesaDTO despesa);
         bool HasDespesaNoMesComAMesmaDescricao(InserirDespesaDTO despesa);
-        Task<List<InserirDespesaDTO>> AllDespesas();
+        Task<List<InserirDespesaDTO>> AllDespesas(string? descricao);
         Task<InserirDespesaDTO> GetById(int id);
         Task Update(InserirDespesaDTO despesa, int id);
         Task Delete(int id);

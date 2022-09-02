@@ -35,11 +35,11 @@ namespace AluraBackEnd1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDespesas()
+        public async Task<IActionResult> GetDespesas(string? descricao)
         {
             try
             {
-                return Ok(await _despesaService.AllDespesas());
+                return Ok(await _despesaService.AllDespesas(descricao));
             }
 
             catch (Exception e)

@@ -18,9 +18,23 @@ namespace AluraBackEnd1.Services
             _mapper = mapper;
         }
 
-        public async Task<List<InserirDespesaDTO>> AllDespesas()
+        enum Categoria
+        {
+            Alimentação,
+            Saúde,
+            Moradia,
+            Transporte,
+            Educação,
+            Lazer,
+            Imprevistos,
+            Outras
+        }
+
+        public async Task<List<InserirDespesaDTO>> AllDespesas(string? descricao)
         { 
-            var despesa = await _financeiroContext.Despesas.ToListAsync(); 
+            var despesa = await _financeiroContext.Despesas
+                .Where(x => string.IsNullOrEmpty(descricao) ? true : x.Descricao.ToLower().Contains(descricao.ToLower()))
+                .ToListAsync(); 
             return _mapper.Map<List<InserirDespesaDTO>>(despesa);
         }
 
@@ -46,12 +60,18 @@ namespace AluraBackEnd1.Services
 
         public async Task Insert(InserirDespesaDTO despesa)
         {
+            if (string.IsNullOrEmpty(despesa.Categoria))
+                despesa.Categoria = "Outros";
+
             _financeiroContext.Despesas.Add(_mapper.Map<Despesa>(despesa));
             await _financeiroContext.SaveChangesAsync();
         }
 
         public async Task Update(InserirDespesaDTO despesa, int id)
         {
+            if (string.IsNullOrEmpty(despesa.Categoria))
+                despesa.Categoria = "Outros";
+
             Despesa item = _financeiroContext.Despesas.First(x => x.Id == id);
             _mapper.Map(despesa, item);
 

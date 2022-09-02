@@ -27,9 +27,11 @@ namespace AluraBackEnd1.Services
         public bool HasReceitaNoMesComAMesmaDescricao(InserirReceitaDTO receita) => _financeiroContext.Receitas.Any(x => x.Descricao.ToUpper() == receita.Descricao.ToUpper() && 
             x.Data.Month == receita.Data.Month);
 
-        public async Task<List<InserirReceitaDTO>> AllReceitas()
+        public async Task<List<InserirReceitaDTO>> AllReceitas(string? descricao)
         {
-            List<Receita> receita = await _financeiroContext.Receitas.ToListAsync();
+            List<Receita> receita = await _financeiroContext.Receitas
+                .Where(x => string.IsNullOrEmpty(descricao) ? true : x.Descricao.ToLower().Contains(descricao.ToLower()))
+                .ToListAsync();
             return _mapper.Map<List<InserirReceitaDTO>>(receita);
         }
 

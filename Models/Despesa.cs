@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel;
 
 namespace AluraBackEnd1.Models
 {
@@ -10,7 +11,7 @@ namespace AluraBackEnd1.Models
         public int Id { get; set; }
 
         [StringLength(50)]
-        [Required(ErrorMessage = "O descrição é obrigatória")]
+        [Required(ErrorMessage = "A descrição é obrigatória")]
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "O valor é obrigatório")]
@@ -18,5 +19,8 @@ namespace AluraBackEnd1.Models
 
         [Required(ErrorMessage = "A data é obrigatória")]
         public DateTime Data { get; set; }
+
+        [StringLength(50)]
+        public string Categoria { get; set; } 
     }
 }

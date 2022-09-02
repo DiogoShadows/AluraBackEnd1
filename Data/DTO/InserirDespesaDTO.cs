@@ -13,5 +13,8 @@ namespace AluraBackEnd1.Data.DTO
 
         [Required(ErrorMessage = "A data é obrigatória")]
         public DateTime Data { get; set; }
+
+        [StringLength(50)]
+        public string Categoria { get; set; } = "Outros";
     }
 }
