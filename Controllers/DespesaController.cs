@@ -48,6 +48,20 @@ namespace AluraBackEnd1.Controllers
             }
         }
 
+        [HttpGet("{ano}/{mes}")]
+        public async Task<IActionResult> GetDespesasByMes(int ano, int mes)
+        {
+            try
+            {
+                return Ok(await _despesaService.DespesasByMes(ano, mes));
+            }
+
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDespesa(int id)
         {

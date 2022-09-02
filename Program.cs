@@ -25,6 +25,7 @@ namespace AluraBackEnd1
             //Injeção dos services
             builder.Services.AddScoped<IReceitaService, ReceitaService>();
             builder.Services.AddScoped<IDespesaService, DespesaService>();
+            builder.Services.AddScoped<IReceitaService, ReceitaService>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

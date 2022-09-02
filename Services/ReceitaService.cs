@@ -60,5 +60,14 @@ namespace AluraBackEnd1.Services
                 await _financeiroContext.SaveChangesAsync();
             }
         }
+
+        public async Task<List<InserirReceitaDTO>> ReceitasByMes(int ano, int mes)
+        {
+            List<Receita> receitas = await _financeiroContext.Receitas
+                .Where(x => x.Data.Year == ano && x.Data.Month == mes)
+                .ToListAsync();
+
+            return _mapper.Map<List<InserirReceitaDTO>>(receitas);
+        }
     }
 }

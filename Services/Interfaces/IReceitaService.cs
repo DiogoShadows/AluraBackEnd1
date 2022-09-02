@@ -8,6 +8,7 @@ namespace AluraBackEnd1.Services.Interfaces
         Task Insert(InserirReceitaDTO receita);
         bool HasReceitaNoMesComAMesmaDescricao(InserirReceitaDTO receita);
         Task<List<InserirReceitaDTO>> AllReceitas(string? descricao);
+        Task<List<InserirReceitaDTO>> ReceitasByMes(int ano, int mes);
         Task<InserirReceitaDTO> GetById(int id);
         Task Update(InserirReceitaDTO receita, int id);
         Task Delete(int id);

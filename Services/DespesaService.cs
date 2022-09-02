@@ -78,5 +78,14 @@ namespace AluraBackEnd1.Services
             _financeiroContext.Despesas.Update(item);
             await _financeiroContext.SaveChangesAsync();
         }
+
+        public async Task<List<InserirDespesaDTO>> DespesasByMes(int ano, int mes)
+        {
+            List<Despesa> despesas = await _financeiroContext.Despesas
+                .Where(x => x.Data.Year == ano && x.Data.Month == mes)
+                .ToListAsync();
+
+            return _mapper.Map<List<InserirDespesaDTO>>(despesas);
+        }
     }
 }
