@@ -26,17 +26,16 @@ namespace AluraBackEnd1.Services
                 .SumAsync(x => x.Valor);
 
             decimal totalDespesas = despesas.Sum(x => x.Valor);
+            List<string> categoriasDespesas = new List<string>();
 
-            var a = despesas.GroupBy(x => x.Categoria).ToList();
-
-            List<string> b = new List<string>();
+            despesas.GroupBy(x => x.Categoria).ToList().ForEach(item => categoriasDespesas.Add($"{item.Key}: {item.Sum(x => x.Valor)}"));
 
             return new ResumoDTO
             {
                 TotalDespesasMes = totalDespesas,
                 TotalReceitasMes = totalReceitas,
                 SaldoFinal = totalReceitas - totalDespesas,
-
+                DespesasTotalCategoria = categoriasDespesas,
             };
         }
     }
