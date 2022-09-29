@@ -12,5 +12,6 @@ namespace AluraBackEnd1.Data
 
         public DbSet<Despesa> Despesas { get; set; }
         public DbSet<Receita> Receitas { get; set; }
+        public DbSet<DadosLogin> DadosLogins { get; set; }
     }
 }
