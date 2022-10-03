@@ -30,6 +30,7 @@ namespace AluraBackEnd1
             builder.Services.AddScoped<IReceitaService, ReceitaService>();
             builder.Services.AddScoped<IDespesaService, DespesaService>();
             builder.Services.AddScoped<IResumoService, ResumoService>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -39,8 +40,6 @@ namespace AluraBackEnd1
                     options => builder.Configuration.Bind("JwtSettings", options))
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options => builder.Configuration.Bind("CookieSettings", options));
-
-            var app = builder.Build();
 
             builder.Services.AddAuthentication(x =>
             {
@@ -62,6 +61,8 @@ namespace AluraBackEnd1
                     };
                 }
             );
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
