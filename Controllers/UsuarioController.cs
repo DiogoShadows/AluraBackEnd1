@@ -37,12 +37,17 @@ namespace AluraBackEnd1.Controllers
         {
             try
             {
-                return Ok(await _loginService.SenhaCorreta(email, senha));
+                if(!await _loginService.SenhaCorreta(email, senha))
+                {
+                    return NotFound();
+                }
+
+                return Ok(_loginService.GerarToken(email));
             }
 
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return Unauthorized(e.Message);
             }
         }
     }

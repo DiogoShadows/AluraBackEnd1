@@ -8,5 +8,6 @@ namespace AluraBackEnd1.Services.Interfaces
     {
         Task Insert(DadosLogin login);
         Task<bool> SenhaCorreta(string email, string senha);
+        object GerarToken(string email);
     }
 }

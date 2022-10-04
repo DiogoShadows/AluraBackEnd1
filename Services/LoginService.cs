@@ -2,6 +2,9 @@
 using AluraBackEnd1.Models;
 using AluraBackEnd1.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -28,6 +31,25 @@ namespace AluraBackEnd1.Services
             senha = StringEncriptada(senha);
 
             return await _financeiroContext.DadosLogins.AnyAsync(x => x.Email.Equals(email.ToLower().Trim()) && x.Senha == senha);
+        }
+
+        public object GerarToken(string email)
+        {
+            var chaves = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaves["SecretKey"]));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var tokeOptions = new JwtSecurityToken(
+                issuer: chaves["Issuer"],
+                audience: chaves["Audience"],
+                claims: new List<Claim>() { new Claim(JwtRegisteredClaimNames.Email, email) },
+                expires: DateTime.Now.AddMinutes(5),
+                signingCredentials: signinCredentials
+            );
+
+            var token = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+            return new { Email = email, Token = token };
         }
 
         private string StringEncriptada(string palavra)
