@@ -1,12 +1,13 @@
 ﻿using AluraBackEnd1.Data.DTO;
 using AluraBackEnd1.Models;
 using AluraBackEnd1.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AluraBackEnd1.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize]
     public class DespesaController : ControllerBase
     {
         private IDespesaService _despesaService;

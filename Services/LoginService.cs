@@ -43,7 +43,7 @@ namespace AluraBackEnd1.Services
                 issuer: chaves["Issuer"],
                 audience: chaves["Audience"],
                 claims: new List<Claim>() { new Claim(JwtRegisteredClaimNames.Email, email) },
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddHours(8),
                 signingCredentials: signinCredentials
             );
 
